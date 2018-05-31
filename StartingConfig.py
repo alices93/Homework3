@@ -109,13 +109,6 @@ def calcolaF(posizioni, rc, L):
 		forza.append((fx, fy, fz))
 	return forza
 
-def controllo(coordinata, L):
-	if coordinata < 0:
-		return coordinata + L
-	if coordinata > L :
-		return coordinata - L
-	return coordinata
-
 def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMolecole):
 	t = 0.0
 	listaEnergia = []
@@ -126,9 +119,6 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 			nuovaPosizX = posizione[0] + velocita[0] * deltat + 0.5 * forza[0] * (deltat ** 2)
 			nuovaPosizY = posizione[1] + velocita[1] * deltat + 0.5 * forza[1] * (deltat ** 2)
 			nuovaPosizZ = posizione[2] + velocita[2] * deltat + 0.5 * forza[2] * (deltat ** 2)
-			nuovaPosizX = controllo(nuovaPosizX,L)
-			nuovaPosizY = controllo(nuovaPosizY,L)
-			nuovaPosizZ = controllo(nuovaPosizZ,L)
 			posizNuove.append((nuovaPosizX, nuovaPosizY, nuovaPosizZ))
 		posizioni = posizNuove
 		forzeNuove = calcolaF(posizioni, rc, L)

@@ -55,3 +55,15 @@ def calcolaF(posizioni, rc, L):
 			fz += (rz / (r ** 3)) * (1 + r) * math.exp(-r)
 		forza.append((fx, fy, fz))
 	return forza
+
+def calcolaU(posizioni, numeroMolecole, L, rc):
+    u = 0.0
+    for molecola in posizioni:
+        for molecola2 in posizioni:
+			if molecola == molecola2:
+				continue
+			r = distanza(molecola, molecola2, L)
+			if r > rc:
+				continue
+            u += (1 / r) * math.exp(-r)
+    return u
