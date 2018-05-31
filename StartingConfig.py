@@ -50,13 +50,13 @@ def velocitaPrim(velocita, momento): #velocita primate
 		velocitaPrim.append((vxPrim, vyPrim, vzPrim))
 	return velocitaPrim
 
+
 def calcolaK(velocitaPrim, numeroMolecole): #energia cinetica
-	energiaZZ = 0.0
+	k = 0.0
 	for v in velocitaPrim:
-		energiaZZ += v[0]**2 + v[1]**2 + v[2]**2
-	energiaZZ *= 0.5
-	print 'asd ' + str(energiaZZ)
-	return energiaZZ / 60.0
+		k += v[0]**2 + v[1]**2 + v[2]**2
+	k *= 0.5
+	return k
 
 def calcolaAlpha(numeroMolecole, k):
 	alpha = math.sqrt(0.8 * numeroMolecole / k)
@@ -141,8 +141,6 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 		velocitaStart = velocitaNuove
 		forze = forzeNuove
 		energiaK = calcolaK(velocitaStart, numeroMolecole)
-		print '-----------'
-		print energiaK
 
 		listaEnergia.append(energiaK)
 
@@ -159,8 +157,8 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 
 	with open('startingConfig\\posizioni.txt', 'w') as the_file:
 		the_file.write(str(posizioni))
-	with open('startingConfig\\velocitaStart.txt', 'w') as the_file:
-		the_file.write(str(velocitaStart))
+	with open('startingConfig\\listaVelScal.txt', 'w') as the_file:
+		the_file.write(str(listaVelScal))
 	with open('startingConfig\\energiaK.txt', 'w') as the_file:
 		the_file.write(str(energieNuove))
 
@@ -181,6 +179,7 @@ def main():
 	vstart = velocitaStart(vprim, alpha, numeroMolecole)
 	forze = calcolaF(posizioni, rc, L)
 	MDloop(rc, posizioni, vstart, 0.002, forze, 1.0, L, numeroMolecole)
+
 
 
 main()
