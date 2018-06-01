@@ -50,9 +50,9 @@ def calcolaF(posizioni, rc, L):
 			rx = calcolaRx(molecola, molecola2, L, 0)
 			ry = calcolaRx(molecola, molecola2, L, 1)
 			rz = calcolaRx(molecola, molecola2, L, 2)
-			fx += (rx / (r ** 3)) * (1 + r) * (-math.exp(r))
-			fy += (ry / (r ** 3)) * (1 + r) * (-math.exp(r))
-			fz += (rz / (r ** 3)) * (1 + r) * (-math.exp(r))
+			fx += (rx / (r ** 3)) * (1 + r) * math.exp(-r)
+			fy += (ry / (r ** 3)) * (1 + r) * math.exp(-r)
+			fz += (rz / (r ** 3)) * (1 + r) * math.exp(-r)
 		forza.append((fx, fy, fz))
 	return forza
 
@@ -65,7 +65,7 @@ def calcolaU(posizioni, numeroMolecole, L, rc):
             r = distanza(molecola, molecola2, L)
             if r > rc:
                 continue
-            u += (1 / r) * (-math.exp(r))
+            u += (1 / r) * math.exp(-r)
     return u
 
 def calcolaP(posizioni, numeroMolecole, L, rc, temperatura):
@@ -78,7 +78,7 @@ def calcolaP(posizioni, numeroMolecole, L, rc, temperatura):
             r = distanza(molecola, molecola2, L)
             if r > rc:
                 continue
-            pEx += (1/(3 * L ** 3)) * (1 / r + 1) * (-math.exp(r))
+            pEx += (1/(3 * L ** 3)) * (1 / r + 1) * math.exp(-r)
     p = pId + pEx
     return p
 
@@ -90,18 +90,25 @@ def energiaTotale(energia, potenziale):
     eTot = energia + potenziale
     return eTot
 
+#def controllo(coordinata, L):
+#  if coordinata < 0:
+#    return coordinata + L
+#  if coordinata > L :
+#    return coordinata - L
+#  return coordinata
+
 def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMolecole):
-    t = 0.0
-    listaK = []
-    listaU = []
-    listaeTot = []
-    listaTemp = []
-    listaP = []
-    listaF = []
-	#listaTempo = []
-    while(t < tArrivo):
+	t = 0.0
+	listaK = []
+	listaU = []
+	listaeTot = []
+	listaTemp = []
+	listaP = []
+	listaF = []
+	listaTempo = []
+	while(t < tArrivo):
 		t += deltat
-		#listaTempo.append(t)
+		listaTempo.append(t)
 		posizNuove = []
 		for posizione, velocita, forza in zip(posizioni, velocitaStart, forze):
 			nuovaPosizX = posizione[0] + velocita[0] * deltat + 0.5 * forza[0] * (deltat ** 2)
@@ -112,39 +119,34 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 		forzeNuove = calcolaF(posizioni, rc, L)
 		velocitaNuove = []
 		for velocita, forza, forzaNuova in zip(velocitaStart, forze, forzeNuove):
-            velocitaNuovaX = velocita[0] + 0.5 * forza[0] * deltat + 0.5 * forzaNuova[0] * deltat
-            velocitaNuovaY = velocita[1] + 0.5 * forza[1] * deltat + 0.5 * forzaNuova[1] * deltat
-            velocitaNuovaZ = velocita[2] + 0.5 * forza[2] * deltat + 0.5 * forzaNuova[2] * deltat
-            velocitaNuove.append((velocitaNuovaX, velocitaNuovaY, velocitaNuovaZ))
-		velocitaStart = velocitaNuove
-        k = calcolaK(velocitaStart, numeroMolecole) / numeroMolecole
-        u = calcolaU(posizioni, numeroMolecole, L, rc) / numeroMolecole
-        eTot = energiaTotale(k, u)
-        temp = calcolaT(k)
-        p = calcolaP(posizioni, numeroMolecole, L, rc, temp)
-        listaU.append(u)
-        listaK.append(k)
-        listaeTot.append(eTot)
-        listaTemp.append(temp)
-        listaP.append(p)
+			velocitaNuovaX = velocita[0] + 0.5 * forza[0] * deltat + 0.5 * forzaNuova[0] * deltat
+			velocitaNuovaY = velocita[1] + 0.5 * forza[1] * deltat + 0.5 * forzaNuova[1] * deltat
+			velocitaNuovaZ = velocita[2] + 0.5 * forza[2] * deltat + 0.5 * forzaNuova[2] * deltat
+			velocitaNuove.append((velocitaNuovaX, velocitaNuovaY, velocitaNuovaZ))
+		velocitaStart = velocitaNuove[:]
+		forze = forzeNuove[:]
 
-    with open('MDloop\\k_' + str(deltat) + '.txt', 'w') as the_file:
-        the_file.write(str(listaK))
-    with open('MDloop\\u_' + str(deltat) + '.txt', 'w') as the_file:
-        the_file.write(str(listaU))
-    with open('MDloop\\eTot_' + str(deltat) + '.txt', 'w') as the_file:
-        the_file.write(str(listaeTot))
-    with open('MDloop\\temperatura_' + str(deltat) + '.txt', 'w') as the_file:
-        the_file.write(str(listaTemp))
-    with open('MDloop\\p_' + str(deltat) + '.txt', 'w') as the_file:
-        the_file.write(str(listaP))
+		k = calcolaK(velocitaStart, numeroMolecole) / numeroMolecole
+		u = calcolaU(posizioni, numeroMolecole, L, rc) / numeroMolecole
+		eTot = energiaTotale(k, u)
+		temp = calcolaT(k)
+		p = calcolaP(posizioni, numeroMolecole, L, rc, temp)
+		listaU.append(u)
+		listaK.append(k)
+		listaeTot.append(eTot)
+		listaTemp.append(temp)
+		listaP.append(p)
 
-
-	with open('MDloop\\RunVelPos_' + str(deltat)'.txt', 'w') as the_file:
-        the_file.write(str(posizioni) + '\t' + str(velocitaStart) + '\t' + str(forze))
+	with open('MDloop\\RunVelPos_' + str(deltat) + '.txt', 'w') as the_file:
+		for posizione, velocita, forza in zip(posizioni, velocitaStart, forze):
+			the_file.write(str(posizione) + '\t' + str(velocita) + '\t' + str(forza))
+	        the_file.write('\n')
 	with open('MDloop\\Run_' + str(deltat) + '.txt', 'w') as the_file:
-        the_file.write(str(listaK) + '\t' + str(listaU) + '\t' + str(listaeTot) + '\t' + str(listaTemp) + '\t' + str(listaP) )
-#str(listaTempo) + '\t' +
+		print len(zip(listaTempo, listaK, listaU, listaeTot, listaTemp, listaP))
+		for tempo, K, U, eTot, Temp, P in zip(listaTempo, listaK, listaU, listaeTot, listaTemp, listaP):
+			the_file.write(str(tempo) + '\t' + str(K) + '\t' + str(U) + '\t' + str(eTot) + '\t' + str(Temp) + '\t' + str(P) )
+			the_file.write('\n')
+
 
 def main():
     posizioni = []

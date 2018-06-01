@@ -14,12 +14,17 @@ with open('energiaK.txt', 'U') as f: #apre file
 		#energie.append(float(numero))
 	energie = ast.literal_eval(data)
 
+ascissa = [0]*len(energie)
+for indice in range(len(ascissa)):
+	ascissa[indice] = 0.002 * indice
+
+
 # Create a dataset:
 #df=pd.DataFrame({'k': range(1,101), 'sigma': np.random.randn(100)*15+range(1,101) })
-df=pd.DataFrame({'iterazioni': range(0,500), 'energie': np.array(energie)})
+df=pd.DataFrame({'iterazioni': np.array(ascissa), 'energie': np.array(energie)})
 
 # plot
 plt.plot('iterazioni', 'energie', data=df, linestyle='-', linewidth=0.5, marker='', color ='black')
-plt.xlabel('Numero iterazioni')
-plt.ylabel('Energia per particella')
+plt.xlabel('tempo')
+plt.ylabel('energia per particella')
 plt.show()
