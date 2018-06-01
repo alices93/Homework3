@@ -106,7 +106,18 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 	listaP = []
 	listaF = []
 	listaTempo = []
-	while(t < tArrivo):
+	k = calcolaK(velocitaStart, numeroMolecole) / numeroMolecole
+	u = calcolaU(posizioni, numeroMolecole, L, rc) / numeroMolecole
+	eTot = energiaTotale(k, u)
+	temp = calcolaT(k)
+	p = calcolaP(posizioni, numeroMolecole, L, rc, temp)
+	listaU.append(u)
+	listaK.append(k)
+	listaeTot.append(eTot)
+	listaTemp.append(temp)
+	listaP.append(p)
+	listaTempo.append(0)
+	while(t + deltat < tArrivo):
 		t += deltat
 		listaTempo.append(t)
 		posizNuove = []
