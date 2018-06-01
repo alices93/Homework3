@@ -142,10 +142,37 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 			the_file.write(str(posizione) + '\t' + str(velocita) + '\t' + str(forza))
 	        the_file.write('\n')
 	with open('MDloop\\Run_' + str(deltat) + '.txt', 'w') as the_file:
-		print len(zip(listaTempo, listaK, listaU, listaeTot, listaTemp, listaP))
+		#print len(zip(listaTempo, listaK, listaU, listaeTot, listaTemp, listaP))
 		for tempo, K, U, eTot, Temp, P in zip(listaTempo, listaK, listaU, listaeTot, listaTemp, listaP):
 			the_file.write(str(tempo) + '\t' + str(K) + '\t' + str(U) + '\t' + str(eTot) + '\t' + str(Temp) + '\t' + str(P) )
 			the_file.write('\n')
+
+
+def autocorrelazione(variabile, k, media):
+	autocorr = 0.0
+	for indice in range(0, len(variabile) - k):
+		autocorr += (variabile[indice+k] - media) * (variabile[indice] - media)
+	C = (1.0 / (len(variabile) - k))*autocorr
+	return C
+
+def autocorrAnalisi(variabile, media):
+	kauto = 0
+	Trovato = False
+	listaCK = []
+	while ((not Trovato) or (k<50)):
+		ktemp = autocorrelazione(variabile, k, media)
+		listaCK.append(ktemp)
+		if ktemp<0 and not Trovato:
+			k1 = k-1
+			Trovato = True
+		k += 1
+	C0 = CK[0]
+	tau = 0.0
+	for k in range(1, k1):
+		tau += listaCK[k] / C0
+	tau += 0.5
+	sigma = math.sqrt((C0 / len(variabile)) * 2 * tau)
+	return (k, tau, sigma, listaCK)
 
 
 def main():
@@ -161,6 +188,6 @@ def main():
     L = calcolaL(numeroMolecole)
     rc = raggioCritico(L)
     forze = calcolaF(posizioni, rc, L)
-    MDloop(rc, posizioni, vstart, 0.009, forze, 25.0, L, numeroMolecole)
+    MDloop(rc, posizioni, vstart, 0.081, forze, 25.0, L, numeroMolecole)
 
 main()
