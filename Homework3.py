@@ -58,8 +58,8 @@ def calcolaF(posizioni, rc, L):
 
 def calcolaU(posizioni, numeroMolecole, L, rc):
     u = 0.0
-    for molecola in posizioni:
-        for molecola2 in posizioni:
+    for indice, molecola in enumerate(posizioni):
+        for molecola2 in posizioni[indice+1:]:
             if molecola == molecola2:
                 continue
             r = distanza(molecola, molecola2, L)
@@ -71,8 +71,8 @@ def calcolaU(posizioni, numeroMolecole, L, rc):
 def calcolaP(posizioni, numeroMolecole, L, rc, temperatura):
     pId =  numeroMolecole * temperatura / (L ** 3)
     pEx = 0.0
-    for molecola in posizioni:
-        for molecola2 in posizioni:
+    for indice, molecola in enumerate(posizioni):
+        for molecola2 in posizioni[indice+1:]:
             if molecola == molecola2:
                 continue
             r = distanza(molecola, molecola2, L)
