@@ -7,9 +7,9 @@ import ast
 
 energie = []
 with open('MDloop\\Run_0.001.txt', 'U') as f:
-	data = f.read() 
+	data = f.read()
 	righe = data.split('\n') #divide per riga in una lista di stringhe
-	for riga in righe:
+	for riga in righe[1:]:
 		#print riga
 		valori = riga.split('\t')
 		energia = float(valori[1])
