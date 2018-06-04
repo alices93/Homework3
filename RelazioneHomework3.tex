@@ -25,43 +25,78 @@
 \author{\sc Alice Schirinà}
 \maketitle
 
-Consideriamo un sistema di molecole monoatomiche che interagiscono tramite il potenziale 
+\noindent Consideriamo un sistema di molecole monoatomiche che interagiscono tramite il potenziale 
 \begin{equation*}
 U(r) = A \frac{\sigma e^{-r/\sigma}}{r}
 \end{equation*}
-quando $ r <r_c $ e $U(r) = 0$ per $ r >r_c $. Scegliamo il lato della scatola cubica $ L/\sigma $ in maniera tale che sia $\rho \sigma^3=0.5$ e utilizziamo unità ridotte,
+quando $ r <r_c $ e $U(r) = 0$ per $ r >r_c $. Scegliamo il lato della scatola cubica $ L/\sigma $ in maniera tale che sia $\rho \sigma^3=0.5$ e utilizziamo unità ridotte, cioè
 \begin{table}[H]
 	\centering
-	\begin{tabular}{cl} 
+	\begin{tabular}{l} 
 		\hline
-		$Unit\grave{a}\ usuali$ & $Unit\grave{a}\ ridotte$ \\
+		 $Unit\grave{a}\ ridotte$ \\
 		\hline
-		$r$	&	$r^* = r/\sigma$	\\
-		$t$	&	$t^* = t/\sigma \sqrt{A/m}$	\\
-		$v$	&	$v^* = v\sqrt{m/A}$	\\
-		$E$	&	$E^* = E/A$	\\
-		$p$	&	$p^* = p \sigma^3/A$	\\
-		$T$	&	$T^* = k_B T/A$	\\\hline
+		$r^* = r/\sigma$	\\
+		$t^* = t/\sigma \sqrt{A/m}$	\\
+		$v^* = v\sqrt{m/A}$	\\
+		$E^* = E/A$	\\
+		$p^* = p \sigma^3/A$	\\
+		$T^* = k_B T/A$	\\\hline
 	\end{tabular}
 \end{table}
 \medskip
 \noindent \section*{Configurazione iniziale}
-Generiamo una configurazione in cui le molecole sono distribuite casualmente nella scatola di lato $ L/\sigma $ e con velocità anch'esse casuali per cui usiamo il comando $RNG(-0.5,0.5)$. In particolare, vogliamo che sia $\sum v^* = 0$. In generale, questo non accade per le nostre velocità per cui definiamo la quantità
+Generiamo una configurazione in cui le molecole sono distribuite casualmente nella scatola di lato $ L/\sigma $ e con velocità anch'esse casuali per cui usiamo il comando $RNG(-0.5,0.5)$. In particolare, vogliamo che sia $\sum v^* = 0$. In generale, questo non accade per cui definiamo la quantità
 \begin{equation*}
 P^* = \sum_{i=0}^N v_i^*
 \end{equation*}
-calcoliamo le quantità
+e ridefiniamo velocità ed energia cinetica come segue
 \begin{eqnarray*}
-v_i^*' &=& v_i* - \frac{P^*}{N}\\
-k^* &=& \sum_i \frac{1}{2} (v_i^*')^2
+{v_i^*}' &=& v_i^* - \frac{P^*}{N}\\
+K^* &=& \sum_i \frac{1}{2} ({v_i^*}')^2\\
 \end{eqnarray*}
-e infine riscaliamo le velocità come segue
+e infine scaliamo le velocità
 \begin{equation*}
-\hat{v}_i^* = \alpha v_i^*'
+\hat{v}_i^* = \alpha {v_i^*}'
 \end{equation*}
 dove 
 \begin{equation*}
-\alpha = \sqrt{\frac{0.8N}{k^*}}
+\alpha = \sqrt{\frac{0.8N}{K^*}}
 \end{equation*}
-In questo modo otteniamo particelle disposte casualmente nella scatola con velocità tali che la somma totale sia nulla e con energia cinetica per particella $k^*=0.8$.
+In questo modo otteniamo particelle disposte casualmente nella scatola con velocità tali che la somma totale sia nulla e con energia cinetica per particella $K^* = 0.8$.\\
+Con questa configurazione eseguiamo una simulazione utilizzando lo schema di Verlet per le velocità con passo temporale $\Delta t^* = 0.002$ e fermandoci a $t^* = 1$. Infine, scaliamo ancora una volta le velocità in maniera tale che $K^*/N = 1$. Questa è la nostra configurazione iniziale.
+
+\noindent Partendo dalla stessa configurazione eseguiamo sei simulazioni  ciascuna delle quali con passo tempo diverso
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cl} 
+		\hline
+		$run$	&	$\Delta t$ \\
+		\hline
+		$1$	&	$0.001$\\
+		$2$	&	$0.003$	\\
+		$3$	&	$0.009$	\\
+		$4$	&	$0.027$	\\
+		$5$	&	$0.081$	\\
+		$6$	&	$0.243$	\\\hline
+	\end{tabular}
+\end{table}
+\medskip
+\noindent e arrestandoci a $t^* = 25$. Mostriamo di seguito gli andamenti dell'energia cinetica per molecola, $K^*/N$, per le varie simulazioni.
+%grafici
+Come possiamo osservare dal grafico, l'energia nella simulazione con $\Delta t = 0.243$ risulta essere instabile per cui eseguiamo la nostra analisi su tutte le simulazioni eccetto questa.
+
+\section*{Divergenza della traiettoria}
+
+
+
+
+
+
+
+
+
+
+
+ 
 \end{document}
