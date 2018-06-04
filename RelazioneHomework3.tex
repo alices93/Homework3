@@ -1,0 +1,67 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[a4paper,top=1.5cm,bottom=2cm,left=1.5cm,right=1.5cm]{geometry}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage{datetime}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{titlepic}
+%\usepackage{physics}
+\usepackage{subfigure}
+\usepackage{float}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+
+\begin{document}
+
+\title{\sc Homework 3}
+\author{\sc Alice Schirinà}
+\maketitle
+
+Consideriamo un sistema di molecole monoatomiche che interagiscono tramite il potenziale 
+\begin{equation*}
+U(r) = A \frac{\sigma e^{-r/\sigma}}{r}
+\end{equation*}
+quando $ r <r_c $ e $U(r) = 0$ per $ r >r_c $. Scegliamo il lato della scatola cubica $ L/\sigma $ in maniera tale che sia $\rho \sigma^3=0.5$ e utilizziamo unità ridotte,
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cl} 
+		\hline
+		$Unit\grave{a}\ usuali$ & $Unit\grave{a}\ ridotte$ \\
+		\hline
+		$r$	&	$r^* = r/\sigma$	\\
+		$t$	&	$t^* = t/\sigma \sqrt{A/m}$	\\
+		$v$	&	$v^* = v\sqrt{m/A}$	\\
+		$E$	&	$E^* = E/A$	\\
+		$p$	&	$p^* = p \sigma^3/A$	\\
+		$T$	&	$T^* = k_B T/A$	\\\hline
+	\end{tabular}
+\end{table}
+\medskip
+\noindent \section*{Configurazione iniziale}
+Generiamo una configurazione in cui le molecole sono distribuite casualmente nella scatola di lato $ L/\sigma $ e con velocità anch'esse casuali per cui usiamo il comando $RNG(-0.5,0.5)$. In particolare, vogliamo che sia $\sum v^* = 0$. In generale, questo non accade per le nostre velocità per cui definiamo la quantità
+\begin{equation*}
+P^* = \sum_{i=0}^N v_i^*
+\end{equation*}
+calcoliamo le quantità
+\begin{eqnarray*}
+v_i^*' &=& v_i* - \frac{P^*}{N}\\
+k^* &=& \sum_i \frac{1}{2} (v_i^*')^2
+\end{eqnarray*}
+e infine riscaliamo le velocità come segue
+\begin{equation*}
+\hat{v}_i^* = \alpha v_i^*'
+\end{equation*}
+dove 
+\begin{equation*}
+\alpha = \sqrt{\frac{0.8N}{k^*}}
+\end{equation*}
+In questo modo otteniamo particelle disposte casualmente nella scatola con velocità tali che la somma totale sia nulla e con energia cinetica per particella $k^*=0.8$.
+\end{document}
