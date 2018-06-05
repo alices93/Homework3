@@ -24,7 +24,9 @@ for indice in range(len(ascissa)):
 df=pd.DataFrame({'iterazioni': np.array(ascissa), 'energie': np.array(energie)})
 
 # plot
+plt.title('dt*='+str(deltat))
 plt.plot('iterazioni', 'energie', data=df, linestyle='-', linewidth=0.7, marker='', color ='black')
-plt.xlabel('tempo')
-plt.ylabel('energia per particella')
+plt.xlabel('t*')
+plt.xlim(0.0, 25.0)
+plt.ylabel('K*/N')
 plt.show()

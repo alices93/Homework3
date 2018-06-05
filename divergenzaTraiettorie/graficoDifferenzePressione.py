@@ -14,7 +14,7 @@ with open('C:\\Users\\alice\\Google Drive\\UNI\\Sapienza\\Homework3\\MDloop\\Run
 		pressione = float(valori[5])
 		pressionitemp1.append(pressione)
 
-deltat = 0.027
+deltat = 0.081
 pressioni2 = []
 with open('C:\\Users\\alice\\Google Drive\\UNI\\Sapienza\\Homework3\\MDloop\\Run_' + str(deltat) + '.txt', 'U') as f:
 	data = f.read()
@@ -46,7 +46,8 @@ for indice in range(len(ascissa)):
 df=pd.DataFrame({'iterazioni': np.array(ascissa), 'pressioni': np.array(differenza21)})
 
 # plot
-plt.plot('iterazioni', 'pressioni', data=df, linestyle='', linewidth=0.5, marker='.', markersize = 1.0, color ='black')
-plt.xlabel('tempo')
-plt.ylabel('differenza pressione')
+plt.plot('iterazioni', 'pressioni', data=df, linestyle='-', linewidth=0.2, marker='', markersize = 1.0, color ='black')
+plt.xlabel('t*')
+plt.xlim(0.0, 25.0)
+plt.ylabel('P5-P1')
 plt.show()

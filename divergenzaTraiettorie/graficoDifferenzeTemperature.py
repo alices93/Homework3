@@ -14,7 +14,7 @@ with open('C:\\Users\\alice\\Google Drive\\UNI\\Sapienza\\Homework3\\MDloop\\Run
 		temperatura = float(valori[4])
 		temperaturetemp1.append(temperatura)
 
-deltat = 0.003
+deltat = 0.081
 temperature2 = []
 with open('C:\\Users\\alice\\Google Drive\\UNI\\Sapienza\\Homework3\\MDloop\\Run_' + str(deltat) + '.txt', 'U') as f:
 	data = f.read()
@@ -46,7 +46,8 @@ for indice in range(len(ascissa)):
 df=pd.DataFrame({'iterazioni': np.array(ascissa), 'temperature': np.array(differenza21)})
 
 # plot
-plt.plot('iterazioni', 'temperature', data=df, linestyle='', linewidth = 0.5, marker='.', markersize = 0.5, color ='black')
-plt.xlabel('tempo')
-plt.ylabel('differenza temperatura')
+plt.plot('iterazioni', 'temperature', data=df, linestyle='-', linewidth = 0.5, marker='', markersize = 0.5, color ='black')
+plt.xlabel('t*')
+plt.xlim(0.0, 25.0)
+plt.ylabel('T5-T1')
 plt.show()

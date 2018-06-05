@@ -14,7 +14,7 @@ with open('C:\\Users\\alice\\Google Drive\\UNI\\Sapienza\\Homework3\\MDloop\\Run
 		energia = float(valori[3])
 		energietemp1.append(energia)
 
-deltat = 0.003
+deltat = 0.081
 energie2 = []
 with open('C:\\Users\\alice\\Google Drive\\UNI\\Sapienza\\Homework3\\MDloop\\Run_' + str(deltat) + '.txt', 'U') as f:
 	data = f.read()
@@ -46,7 +46,8 @@ for indice in range(len(ascissa)):
 df=pd.DataFrame({'iterazioni': np.array(ascissa), 'energie': np.array(differenza21)})
 
 # plot
-plt.plot('iterazioni', 'energie', data=df, linestyle='', linewidth=0.2, marker='.', markersize=0.5, color ='black')
-plt.xlabel('tempo')
-plt.ylabel('differenza energia')
+plt.plot('iterazioni', 'energie', data=df, linestyle='-', linewidth=0.2, marker='', markersize=0.5, color ='black')
+plt.xlabel('t*')
+plt.xlim(0.0, 25.0)
+plt.ylabel('E5-E1')
 plt.show()

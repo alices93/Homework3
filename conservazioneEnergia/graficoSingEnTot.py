@@ -24,7 +24,8 @@ for indice in range(len(ascissa)):
 df=pd.DataFrame({'iterazioni': np.array(ascissa), 'energie': np.array(energie)})
 
 # plot
-plt.plot('iterazioni', 'energie', data=df, linestyle='-', linewidth=0.7, marker='', color ='black')
-plt.xlabel('tempo')
-plt.ylabel('energia per particella')
+plt.plot('iterazioni', 'energie', data=df, linestyle='-', linewidth=0.2, marker='', color ='black')
+plt.xlabel('t*')
+plt.xlim(0.0, 25.0)
+plt.ylabel('eTot')
 plt.show()

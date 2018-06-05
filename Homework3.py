@@ -161,22 +161,22 @@ def MDloop(rc, posizioni, velocitaStart, deltat, forze, tArrivo, L, numeroMoleco
 	#CKT = []
 	numeroIterazioni = tArrivo/deltat
 	mediaU = media(listaU, numeroIterazioni)
-	kU, tauU, sigmaU, CKU = autocorrAnalisi(listaU, mediaU, deltat)
+	kU, tauU, tauUdeltat, sigmaU, CKU = autocorrAnalisi(listaU, mediaU, deltat)
 	mediaP = media(listaP, numeroIterazioni)
-	kP, tauP, sigmaP, CKP = autocorrAnalisi(listaP, mediaP, deltat)
+	kP, tauP, tauPdeltat, sigmaP, CKP = autocorrAnalisi(listaP, mediaP, deltat)
 	mediaeTot = media(listaeTot, numeroIterazioni)
-	kE, tauE, sigmaE, CKE = autocorrAnalisi(listaeTot, mediaeTot, deltat)
+	kE, tauE, tauEdeltat, sigmaE, CKE = autocorrAnalisi(listaeTot, mediaeTot, deltat)
 	mediaTemp = media(listaTemp, numeroIterazioni)
-	kT, tauT, sigmaT, CKT = autocorrAnalisi(listaTemp, mediaTemp, deltat)
+	kT, tauT, tauTdeltat, sigmaT, CKT = autocorrAnalisi(listaTemp, mediaTemp, deltat)
 	with open('autoCorrelazione\\autoCorrAnal_Run_' + str(deltat) + '.txt', 'w') as the_file:
-		the_file.write('\t\tmedia' + '\t\t\t' + 'tau' + '\t\t\t\t' + 'sigma' + '\n')
-		the_file.write('U:\t' + str(mediaU) + '\t' + str(tauU) + '\t' + str(sigmaU))
+		the_file.write('\t\tmedia' + '\t\t\t' + 'tau(n)' + '\t\t\t' + 'tau(t)' + '\t\t\t'  + 'sigma' + '\n')
+		the_file.write('U:\t' + str(mediaU) + '\t' + str(tauU) +'\t' + str(tauUdeltat) + '\t' + str(sigmaU))
 		the_file.write('\n')
-		the_file.write('P:\t' + str(mediaP) + '\t' + str(tauP) + '\t' + str(sigmaP))
+		the_file.write('P:\t' + str(mediaP) + '\t' + str(tauP) + '\t' + str(tauPdeltat) + '\t'  + str(sigmaP))
 		the_file.write('\n')
-		the_file.write('E:\t' + str(mediaeTot) + '\t' + str(tauE) + '\t' + str(sigmaE))
+		the_file.write('E:\t' + str(mediaeTot) + '\t' + str(tauE) + '\t' + str(tauEdeltat) + '\t' + str(sigmaE))
 		the_file.write('\n')
-		the_file.write('T:\t' + str(mediaTemp) + '\t' + str(tauT) + '\t' + str(sigmaT))
+		the_file.write('T:\t' + str(mediaTemp) + '\t' + str(tauT) + '\t' + str(tauTdeltat) + '\t' + str(sigmaT))
 
 
 def media(variabili, numeroCampioni):
@@ -209,10 +209,8 @@ def autocorrAnalisi(variabile, media, deltat):
 	for k in range(1, k1):
 		tau += listaCK[k] / listaCK[0]
 	tau += 0.5
-	sigma = math.sqrt((listaCK[0] / len(variabile)) * 2 * tau * deltat)
-	kauto *= deltat
-	tau *= deltat
-	return (kauto, tau, sigma, listaCK)
+	sigma = math.sqrt((listaCK[0] / len(variabile)) * 2 * tau)
+	return (kauto, tau, tau*deltat, sigma, listaCK)
 
 
 def main():
@@ -228,7 +226,7 @@ def main():
     L = calcolaL(numeroMolecole)
     rc = raggioCritico(L)
     forze = calcolaF(posizioni, rc, L)
-    MDloop(rc, posizioni, vstart, 0.243, forze, 25.0, L, numeroMolecole)
+    MDloop(rc, posizioni, vstart, 0.001, forze, 25.0, L, numeroMolecole)
 
 
 
