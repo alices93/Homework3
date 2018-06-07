@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.10.31)  5 JUN 2018 18:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.10.31)  7 JUN 2018 09:57
 entering extended mode
 **./RelazioneHomework3.tex
 (RelazioneHomework3.tex
@@ -1089,7 +1089,7 @@ Package rerunfilecheck Info: File `RelazioneHomework3.out' has not changed.
 Here is how much of TeX's memory you used:
  8887 strings out of 493334
  126685 string characters out of 3139251
- 246385 words of memory out of 3000000
+ 246281 words of memory out of 3000000
  12177 multiletter control sequences out of 15000+200000
  18670 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1111,7 +1111,7 @@ sfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
 cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Prog
 ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on RelazioneHomework3.pdf (7 pages, 973304 bytes).
+Output written on RelazioneHomework3.pdf (7 pages, 1099674 bytes).
 PDF statistics:
  299 PDF objects out of 1000 (max. 8388607)
  36 named destinations out of 1000 (max. 500000)
